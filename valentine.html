@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Simmy 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Comic Sans MS', cursive;
+  overflow: hidden;
+}
+
+/* Glowing Name */
+.name {
+  color: #ff1e56;
+  font-size: 28px;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #ff1e56; }
+  to { text-shadow: 0 0 20px #ff1e56; }
+}
+
+.page {
+  display: none;
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  max-width: 90%;
+  position: relative;
+}
+
+.page.active { display: block; }
+
+img {
+  width: 230px;
+  border-radius: 15px;
+  margin: 15px 0;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.next, #yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #ccc;
+  position: absolute;
+}
+
+/* Balloon */
+.balloon {
+  width: 80px;
+  height: 100px;
+  background: #ff4d6d;
+  border-radius: 50%;
+  margin: 20px auto;
+  animation: float 2s infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+.burst {
+  animation: pop 0.4s forwards;
+}
+
+@keyframes pop {
+  to { transform: scale(2); opacity: 0; }
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: red;
+  animation: fall 3s linear infinite;
+}
+
+@keyframes fall {
+  from { top: -10px; }
+  to { top: 110vh; }
+}
+
+.mubarakaaan {
+  font-size: 36px;
+  color: #ff4d6d;
+  animation: zoom 0.6s infinite alternate;
+}
+
+@keyframes zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="music.mp3"></audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="name">For Simmy 💖</div>
+  <img src="photo1.jpg">
+  <button class="next" onclick="goToPage(2)">Next →</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="name">Simmy ✨</div>
+  <h2>I want to ask you one important question… 🥺</h2>
+  <button class="next" onclick="goToPage(3)">Tell me ❤️</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="name">Simmy 💌</div>
+  <h2>Will you be my Valentine?</h2>
+  <button id="yes">Yes 😍</button>
+  <button id="no">No 🙃</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <h1 class="mubarakaaan">MUBARAKAAAAN!!! 🎉</h1>
+  <img src="photo2.jpg">
+  <div class="balloon" id="balloon"></div>
+  <p>You just made me the happiest ❤️</p>
+</div>
+
+<script>
+function goToPage(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page'+p).classList.add('active');
+}
+
+const noBtn = document.getElementById("no");
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("mouseover", moveNo);
+
+function moveNo() {
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+}
+
+document.getElementById("yes").onclick = () => {
+  goToPage(4);
+  document.getElementById("music").play();
+  startConfetti();
+};
+
+document.getElementById("balloon").onclick = function () {
+  this.classList.add("burst");
+};
+
+function startConfetti() {
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    c.style.animationDuration = (2 + Math.random()*3) + "s";
+    document.body.appendChild(c);
+  }
+}
+</script>
+
+</body>
+</html>
